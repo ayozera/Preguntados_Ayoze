@@ -1,8 +1,7 @@
-package com.example.preguntados_ayoze
+package com.example.preguntados_ayoze.activities
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +26,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
+import com.example.preguntados_ayoze.model.DataUp
+import com.example.preguntados_ayoze.model.Question
+import com.example.preguntados_ayoze.R
+import com.example.preguntados_ayoze.navigation.Routs
 import kotlin.random.Random
 
 @Composable

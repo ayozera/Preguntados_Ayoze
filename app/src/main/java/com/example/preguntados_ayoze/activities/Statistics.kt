@@ -1,4 +1,4 @@
-package com.example.preguntados_ayoze
+package com.example.preguntados_ayoze.activities
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import com.example.preguntados_ayoze.R
 
 @Composable
 fun Statistics(navController: NavHostController) {

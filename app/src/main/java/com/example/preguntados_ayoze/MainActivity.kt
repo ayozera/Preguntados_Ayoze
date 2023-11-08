@@ -12,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.example.preguntados_ayoze.navigation.NavigationGraph
+import com.example.preguntados_ayoze.navigation.Routs
 import com.example.preguntados_ayoze.ui.theme.Preguntados_AyozeTheme
 
 class MainActivity : ComponentActivity() {
@@ -39,6 +41,13 @@ fun Main(navController: NavHostController) {
             }
         ) {
             Text(text = "PreguntaDos")
+        }
+        Button(
+            onClick = { 
+                navController.navigate(Routs.LoadQuestion.rout)
+            }
+        ) {
+            Text(text = "Add Question")    
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.preguntados_ayoze
+package com.example.preguntados_ayoze.model
 
 data class Question(
     val question: String,

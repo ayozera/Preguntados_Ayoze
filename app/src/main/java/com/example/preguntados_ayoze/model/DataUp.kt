@@ -1,9 +1,10 @@
-package com.example.preguntados_ayoze
+package com.example.preguntados_ayoze.model
 
 import android.content.Context
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 
@@ -44,10 +45,21 @@ class DataUp {
                         }
                     }
                 }
+                reader.close()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
+
             return questionsList
+        }
+
+        fun writer(question : Question, context : Context) {
+            val content = "\n${question.question}\n${question.img}\n${question.answer}\n" +
+                    "${question.messageRight}\n${question.messageWrong}\n"
+            val fileOutputStream : FileOutputStream =
+                context.openFileOutput("questions.txt", Context.MODE_APPEND)
+            fileOutputStream.write("$content".toByteArray())
+            fileOutputStream.close()
         }
     }
 }
