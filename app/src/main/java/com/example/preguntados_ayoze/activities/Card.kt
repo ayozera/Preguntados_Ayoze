@@ -7,7 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -40,29 +41,34 @@ fun Questions(navController: NavHostController) {
     val sharedPref = LocalContext.current.getSharedPreferences(
         LocalContext.current.getString(R.string.preference_file_key), Context.MODE_PRIVATE
     )
-
+    var selected by remember { mutableStateOf(false) }
     if (index == -1) {
-        index = questions.lastIndex; } else if (index > questions.lastIndex) {
+        index = questions.lastIndex;
+    } else if (index > questions.lastIndex) {
         index = 0
     }
     Column() {
-        navMainMenu(navController, Modifier.weight(9f))
-        Card(sharedPref, questions.get(index), Modifier.weight(9f)) { indexChange ->
+        navMainMenu(navController)
+        Card(sharedPref, questions.get(index), selected) { selectedChange ->
+            selected = selectedChange
+        }
+        PreviosNextButtons(sharedPref) { indexChange ->
             run {
                 index = if (indexChange == 0) Random.nextInt(
                     0,
                     questions.size
                 ) else index + indexChange
+                selected = false
             }
         }
     }
 }
 
 @Composable
-fun navMainMenu(navController: NavHostController, weight: Modifier){
+fun navMainMenu(navController: NavHostController){
     Row(
-        modifier = weight
-            .fillMaxSize()
+        modifier = Modifier.fillMaxWidth()
+            .fillMaxHeight(0.1f)
     ) {
         Button(
             onClick = {
@@ -82,22 +88,21 @@ fun navMainMenu(navController: NavHostController, weight: Modifier){
 }
 
 @Composable
-fun Card(sharedPref : SharedPreferences, question: Question, weight: Modifier,
-         onIndexChange: (Int) -> Unit) {
+fun Card(
+    sharedPref: SharedPreferences, question: Question,
+    selected: Boolean,
+    onSelectedTwo: (Boolean) -> Unit
+) {
 
-    var selected by remember { mutableStateOf(false) }
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = weight.fillMaxSize()
+        modifier = Modifier.fillMaxWidth()
+            .fillMaxHeight(0.9f)
     ) {
 
         QuestionCard(question)
         TrueFalseButtons(question, sharedPref, selected){
-                onSelectedChange -> selected = onSelectedChange
-        }
-        PreviosNextButtons(sharedPref){
-            otherIndexChange -> onIndexChange(otherIndexChange)
-            selected = false
+                onSelectedChange -> onSelectedTwo(onSelectedChange)
         }
     }
 }
@@ -118,6 +123,8 @@ fun QuestionCard(question : Question) {
         contentDescription = "",
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxHeight(0.5f),
+        contentScale = ContentScale.FillBounds
     )
 }
 @Composable

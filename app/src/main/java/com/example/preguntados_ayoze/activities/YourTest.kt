@@ -3,7 +3,8 @@ package com.example.preguntados_ayoze.activities
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,26 +18,25 @@ import androidx.navigation.NavHostController
 import com.example.preguntados_ayoze.R
 import com.example.preguntados_ayoze.model.DataUp
 import com.example.preguntados_ayoze.navigation.Routs
-import kotlin.random.Random
 
 @Composable
 fun YourTest(navController : NavHostController) {
     var index by remember { mutableStateOf(0) }
     val questions = DataUp.loader(LocalContext.current)
-    val sharedPref = LocalContext.current.getSharedPreferences(
-        LocalContext.current.getString(R.string.preference_file_key), Context.MODE_PRIVATE
-    )
+    var hits = 0
+    var failure = 0
 
     if (index == -1) {
-        index = questions.lastIndex; } else if (index > questions.lastIndex) {
+        index = questions.lastIndex;
+    } else if (index > questions.lastIndex) {
         index = 0
     }
 
     Column() {
         Row(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxSize()
+                .fillMaxHeight(0.1f)
+                .fillMaxWidth()
         ) {
             Button(
                 onClick = {
@@ -50,15 +50,7 @@ fun YourTest(navController : NavHostController) {
                     navController.navigate(Routs.Statistics.rout)
                 }
             ) {
-                Text("Ver Resultados")
-            }
-        }
-        Card(sharedPref, questions.get(index), Modifier.weight(9f)) { indexChange ->
-            run {
-                index = if (indexChange == 0) Random.nextInt(
-                    0,
-                    questions.size
-                ) else index + indexChange
+                Text("Siguiente")
             }
         }
     }
