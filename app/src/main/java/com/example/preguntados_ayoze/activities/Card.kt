@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,7 +37,7 @@ import kotlin.random.Random
 
 @Composable
 fun Questions(navController: NavHostController) {
-    var index by remember { mutableStateOf(0) }
+    var index by remember { mutableIntStateOf(0) }
     val questions = DataUp.loader(LocalContext.current)
     val sharedPref = LocalContext.current.getSharedPreferences(
         LocalContext.current.getString(R.string.preference_file_key), Context.MODE_PRIVATE
@@ -47,10 +48,16 @@ fun Questions(navController: NavHostController) {
     } else if (index > questions.lastIndex) {
         index = 0
     }
-    Column() {
-        navMainMenu(navController)
-        Card(sharedPref, questions.get(index), selected) { selectedChange ->
-            selected = selectedChange
+    val question = questions[index]
+    Column(
+        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxWidth()
+            .fillMaxHeight()
+    ) {
+        NavMainMenu(navController)
+        QuestionCard(question)
+        TrueFalseButtons(question, sharedPref, selected){
+                onSelectedChange -> selected = onSelectedChange
         }
         PreviosNextButtons(sharedPref) { indexChange ->
             run {
@@ -65,8 +72,9 @@ fun Questions(navController: NavHostController) {
 }
 
 @Composable
-fun navMainMenu(navController: NavHostController){
+fun NavMainMenu(navController: NavHostController){
     Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxWidth()
             .fillMaxHeight(0.1f)
     ) {
@@ -86,27 +94,6 @@ fun navMainMenu(navController: NavHostController){
         }
     }
 }
-
-@Composable
-fun Card(
-    sharedPref: SharedPreferences, question: Question,
-    selected: Boolean,
-    onSelectedTwo: (Boolean) -> Unit
-) {
-
-    Column(
-        verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth()
-            .fillMaxHeight(0.9f)
-    ) {
-
-        QuestionCard(question)
-        TrueFalseButtons(question, sharedPref, selected){
-                onSelectedChange -> onSelectedTwo(onSelectedChange)
-        }
-    }
-}
-
 
 @Composable
 fun QuestionCard(question : Question) {
@@ -164,7 +151,7 @@ fun TrueFalseButtons(question : Question, sharedPref : SharedPreferences, select
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Button(
+        Button(// True button
             onClick = {
                 if (!selected) {
                     choice = true
@@ -187,7 +174,7 @@ fun TrueFalseButtons(question : Question, sharedPref : SharedPreferences, select
         ) {
             Text("True")
         }
-        Button(
+        Button(// False button
             onClick = {
                 if (!selected) {
                     choice = false
@@ -220,7 +207,7 @@ fun PreviosNextButtons(sharedPref : SharedPreferences, onIndexChange: (Int) -> U
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Button(
+        Button(// Previous button
             onClick = {
                 onIndexChange(-1)
                 sharedPref.edit()
@@ -235,7 +222,7 @@ fun PreviosNextButtons(sharedPref : SharedPreferences, onIndexChange: (Int) -> U
             )
             Text("Previous")
         }
-        Button(
+        Button( // Random button
             onClick = {
                 onIndexChange(0)
                 sharedPref.edit()
@@ -246,7 +233,7 @@ fun PreviosNextButtons(sharedPref : SharedPreferences, onIndexChange: (Int) -> U
         ) {
             Text("Random")
         }
-        Button(
+        Button( // Next button
             onClick = {
                 onIndexChange(1)
                 sharedPref.edit()
