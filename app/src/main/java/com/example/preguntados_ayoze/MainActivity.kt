@@ -37,17 +37,24 @@ fun Main(navController: NavHostController) {
     Column(){
         Button(
             onClick = {
-                navController.navigate(Routs.Preguntados.rout)
+                navController.navigate(Routs.MainGame.rout)
             }
         ) {
             Text(text = "PreguntaDos")
         }
         Button(
             onClick = { 
+                navController.navigate(Routs.YourTest.rout)
+            }
+        ) {
+            Text(text = "Test Yourself")
+        }
+        Button(
+            onClick = {
                 navController.navigate(Routs.LoadQuestion.rout)
             }
         ) {
-            Text(text = "Add Question")    
+            Text(text = "Add Question")
         }
     }
 }

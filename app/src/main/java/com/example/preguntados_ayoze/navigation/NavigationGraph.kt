@@ -17,7 +17,7 @@ fun NavigationGraph() {
         composable(Routs.Main.rout){
             Main(navController)
         }
-        composable(Routs.Preguntados.rout){
+        composable(Routs.MainGame.rout){
             Questions(navController)
         }
         composable(Routs.Statistics.rout){

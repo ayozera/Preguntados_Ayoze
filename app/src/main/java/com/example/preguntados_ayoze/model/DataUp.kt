@@ -11,17 +11,26 @@ import java.io.InputStreamReader
 class DataUp {
 
     companion object {
-        fun loader(context : Context): ArrayList<Question> {
-            /*
+        fun firstloader(context: Context) {
             val assetManager = context.assets
             val inputStream = assetManager.open("questions.txt")
-            val bufferedReader = BufferedReader(InputStreamReader(inputStream))
-             */
-
-            val file = File(context.filesDir, "questions.txt")
-            val fileInput = FileInputStream(file)
+            val reader = BufferedReader(InputStreamReader(inputStream))
+            val writer : FileOutputStream =
+                context.openFileOutput("questions.txt", Context.MODE_APPEND)
+            reader.forEachLine { line ->
+                writer.write("$line\n".toByteArray())
+            }
+            reader.close()
+            writer.close()
+        }
+        fun loader(context : Context): ArrayList<Question> {
             val questionsList = ArrayList<Question>()
+            val file = File(context.filesDir, "questions.txt")
             try {
+                if (!file.exists()) {
+                    firstloader(context)
+                }
+                val fileInput = FileInputStream(file)
                 val reader = BufferedReader(InputStreamReader(fileInput))
                 var counter = -1
                 var question = ""
@@ -45,21 +54,19 @@ class DataUp {
                         }
                     }
                 }
-                reader.close()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-
             return questionsList
         }
 
         fun writer(question : Question, context : Context) {
             val content = "\n${question.question}\n${question.img}\n${question.answer}\n" +
                     "${question.messageRight}\n${question.messageWrong}\n"
-            val fileOutputStream : FileOutputStream =
+            val writer : FileOutputStream =
                 context.openFileOutput("questions.txt", Context.MODE_APPEND)
-            fileOutputStream.write("$content".toByteArray())
-            fileOutputStream.close()
+            writer.write("$content".toByteArray())
+            writer.close()
         }
     }
 }
