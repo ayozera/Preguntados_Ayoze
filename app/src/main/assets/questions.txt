@@ -7,11 +7,23 @@ Lo siento! Si matas a Sif no podrás farmear miles de veces a sus minions
 Epiphyllum oxypetalum, también conocida como Reina de la Noche da flores sólo una noche al año
 a_queen_of_the_night_in_side
 true
-Así es, las flores son todo un espectáculo que dura muy poco
-Lo siento! Has fallado. Aunque parezca de cuento de hadas, es cierto
+Así es, son todo un espectáculo que dura muy poco
+Has fallado! Aunque parece de cuento de hadas
 
 La gran migración europea a América del siglo XIX se produjo debido a un hongo
 la_penuria_de_la_papa
 true
 Así es, el tizón tardío fue un hongo que causó una plaga de papas
 Lo siento, era correcta! Aunque fue una plaga a los cultivos de papa
+
+Los percebes tienen un pene del tamaño de una vez y media su cuerpo
+percebes
+true
+Efectivamente, es el mayor del reino animal en proporción
+Ha fallado! Es sorprendente que no lo vieras en la imagen
+
+El libro los 5 elementos sienta las bases axiomáticas de la geometría hiperbólica
+cinco_elementos
+false
+Efectivamente, la geometría hiperbólica es no euclidiana
+Al contrario, se niega el quinto axioma en las no euclidiana

@@ -1,4 +1,4 @@
-package com.example.preguntados_ayoze
+package com.example.preguntados_ayoze.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -4,10 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.preguntados_ayoze.Main
+import com.example.preguntados_ayoze.activities.Main
 import com.example.preguntados_ayoze.activities.LoadQuestion
 import com.example.preguntados_ayoze.activities.Questions
 import com.example.preguntados_ayoze.activities.Statistics
+import com.example.preguntados_ayoze.activities.YourTest
 
 @Composable
 fun NavigationGraph() {
@@ -25,6 +26,9 @@ fun NavigationGraph() {
         }
         composable(Routs.LoadQuestion.rout){
             LoadQuestion(navController)
+        }
+        composable(Routs.YourTest.rout){
+            YourTest(navController)
         }
     }
 }
