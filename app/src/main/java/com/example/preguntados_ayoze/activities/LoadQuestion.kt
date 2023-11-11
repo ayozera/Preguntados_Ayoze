@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.example.preguntados_ayoze.model.DataUp
 import com.example.preguntados_ayoze.model.Question
+import kotlin.random.Random
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,6 +38,9 @@ fun LoadQuestion(navController: NavHostController) {
         bottonFalseColor = Color.Green
         bottonTrueColor = Color.Blue
     }
+
+    val imageNames = DataUp.imagesLoader(LocalContext.current)
+
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -93,10 +97,11 @@ fun LoadQuestion(navController: NavHostController) {
                 if (textQuestion.isBlank() || messageRight.isBlank() || messageWrong.isBlank()) {
                     Toast.makeText(context,"No se admiten campos vacíos", Toast.LENGTH_SHORT).show()
                 } else {
+                    val image = imageNames[Random.nextInt(0, 11)]
                     DataUp.writer(
                         Question(
                             textQuestion,
-                            "pentasaedro",
+                            image,
                             answer,
                             messageRight,
                             messageWrong

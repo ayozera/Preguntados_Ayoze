@@ -29,9 +29,8 @@ fun YourTest(navController : NavHostController) {
     var index by remember { mutableIntStateOf(0) }
     val questions = DataUp.loader(LocalContext.current)
     var hits by remember { mutableIntStateOf(0) }
-    var failures by remember { mutableIntStateOf(0) }
     var last by remember { mutableStateOf(false) }
-    var context = LocalContext.current
+    val context = LocalContext.current
     val question = questions[index]
     var selected by remember { mutableStateOf(false) }
 
@@ -41,20 +40,19 @@ fun YourTest(navController : NavHostController) {
                 selected = false
                 if(onNavChange) {
                     var finalMessage : String
-                    var divisor = (hits + failures).toDouble()
+                    var divisor = questions.size.toDouble()
                     if (divisor == 0.0) {
                         divisor = 1.0
                     }
                     val mark = 10 * hits / divisor
                     finalMessage = String.format("%.2f | ", mark)
-                    if (mark >= 9){
-                        finalMessage += "Eres una máquina. No se te escapa ni una."
-                    } else if (mark >= 6) {
-                        finalMessage += "Te falta mejorar un poco, pero vas en camino"
-                    } else {
-                        finalMessage += "Me cuesta pensar en un mensaje lo suficiente himillante para ti"
-                    }
+                    finalMessage +=
+                        if (mark >= 9) "Eres una máquina. No se te escapa ni una."
+                        else if (mark >= 6) "Te falta mejorar un poco, pero vas en camino"
+                        else "Me cuesta pensar en un mensaje lo suficiente himillante para ti"
+
                     Toast.makeText(context, finalMessage, Toast.LENGTH_LONG).show()
+
                     navController.popBackStack()
                 } else  {
                     index++
@@ -68,8 +66,6 @@ fun YourTest(navController : NavHostController) {
         OptionButtons(question, selected){ onHitAnswer ->
             if(onHitAnswer) {
                 hits++
-            } else {
-              failures++
             }
             selected = true
         }

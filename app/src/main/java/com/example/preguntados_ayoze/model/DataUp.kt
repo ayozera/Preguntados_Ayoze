@@ -68,5 +68,17 @@ class DataUp {
             writer.write("$content".toByteArray())
             writer.close()
         }
+
+        fun imagesLoader(context: Context) : ArrayList<String> {
+            val assetManager = context.assets
+            val inputStream = assetManager.open("images.txt")
+            val reader = BufferedReader(InputStreamReader(inputStream))
+            var output = ArrayList<String>()
+            reader.forEachLine { line ->
+               output.add(line)
+            }
+            reader.close()
+            return output
+        }
     }
 }
