@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +24,9 @@ import androidx.navigation.NavHostController
 import com.example.preguntados_ayoze.model.DataUp
 import com.example.preguntados_ayoze.model.Question
 import com.example.preguntados_ayoze.navigation.Routs
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun YourTest(navController : NavHostController) {
@@ -33,6 +37,7 @@ fun YourTest(navController : NavHostController) {
     val context = LocalContext.current
     val question = questions[index]
     var selected by remember { mutableStateOf(false) }
+    val delay = rememberCoroutineScope()
 
     Column() {
         NavMenuTest(navController, last){ onNavChange ->
@@ -52,8 +57,10 @@ fun YourTest(navController : NavHostController) {
                         else "Me cuesta pensar en un mensaje lo suficiente himillante para ti"
 
                     Toast.makeText(context, finalMessage, Toast.LENGTH_LONG).show()
-
-                    navController.popBackStack()
+                    delay.launch(Dispatchers.Main) {
+                        delay(3000)
+                        navController.popBackStack()
+                    }
                 } else  {
                     index++
                     if(index == questions.lastIndex){
